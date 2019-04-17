@@ -1,0 +1,37 @@
+node_modules/
+build/
+coverage
+dist
+dev
+.lib
+# build
+.temp
+# idea ignore
+.idea/
+*.ipr
+*.iml
+*.iws
+typings
+
+# eclipse ignore
+.settings/
+.project
+.classpath
+
+# npm
+npm-debug.log
+
+# system files
+.DS_Store
+/.vscode/
+
+# python pyc
+*.pyc
+
+*.swp
+
+server/run/
+server/logs/
+server/app/public/
+#server/**/*.js
+server/**/*.js.map

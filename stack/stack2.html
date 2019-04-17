@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>stack2</title>
+
+</head>
+<body>
+<script>
+    let Stack = (function () {
+        let sym = Symbol();
+        return class {
+            constructor() {
+                this[sym] = [];
+            }
+
+            push(ele) {
+                this[sym].push(ele);
+            }
+
+            pop() {
+                return this[sym].pop();
+            }
+
+            peek() {
+                return this[sym][this.items.length - 1];
+            }
+
+            clear() {
+                this[sym] = [];
+            }
+
+            size() {
+                return this[sym].length;
+            }
+        }
+    })();
+
+    // 进制转换
+    function baseConverter(number, base) {
+        let stack = new Stack;
+        let result = "";
+        if (!+number || !+base) {
+            return result;
+        }
+
+        while (number) {
+            stack.push(number % base);
+            number = Math.floor(number / base);
+        }
+
+        while (stack.size()) {
+            result += stack.pop();
+        }
+
+        return result;
+    }
+
+    console.log(baseConverter(10, 2));
+
+    // 判断回文
+    function isP(name) {
+        let reverseName = "";
+        let stack = new Stack;
+        [...name].forEach(v => stack.push(v));
+        while (stack.size()) {
+            reverseName += stack.pop();
+        }
+
+        return reverseName === name;
+    }
+
+    console.log(isP("上海自来水来自海上"));
+
+    //括号匹配
+
+    function ifSignMatch(code) {
+        let leftSign = ["(", "{", "["];
+        let rightSign = [")", "}", "]"];
+        let stack = new Stack;
+        for (let i = 0; i < code.length; i++) {
+            let s = code.charAt(i);
+            if (leftSign.find(v => v === s)) {
+                stack.push(s);
+            }
+
+            if (rightSign.find(v => v === s)) {
+                if(leftSign.indexOf(stack.pop()) !== rightSign.indexOf(s)){
+                    return false;
+                }
+            }
+        }
+
+        return stack.size() === 0;
+    }
+
+    // console.log(ifSignMatch("({[]})"));
+    console.log(ifSignMatch(`
+                function baseConverter(number,base=2){
+                    let stack = new Stack();
+                    let sign = "0123456789abcdef";
+                    let result = "";
+                    //取所有余数
+                    while ( number > 0 ){
+                        //余数入栈
+                        stack.push( sign[number % base] );
+                        //每次取商
+                        number = Math.floor(number/base);
+                    }
+                    //余数出栈
+                    while (stack.size()){
+                        result += stack.pop();
+                    }
+                    return result;
+                }
+            `));
+
+
+</script>
+
+</body>
+</html>
